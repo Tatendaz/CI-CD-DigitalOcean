@@ -39,7 +39,7 @@ jobs:
 
       - name: Save DigitalOcean kubeconfig with short-lived credentials
         run:
-          doctl kubernetes cluster kubeconfig save --expiry-seconds 600 do-ams3-k8s-dev
+          doctl kubernetes cluster kubeconfig save --expiry-seconds 600 b44ab5f5-143a-4486-af43-9edcaa1ef0bc
           # Deploy Docker image to the DigitalOcean kubernetes cluster
       - name: Deploy
         run: |-
