@@ -9,7 +9,7 @@ on:
 env:
   IMAGE_NAME: flask_app_k8s
   CONTAINER_NAME: flask_app_k8s
-  DEPLOYEMENT_NAME: flask_deployment
+  DEPLOYMENT_NAME: flask_app_k8s
 
 jobs:
   build:
