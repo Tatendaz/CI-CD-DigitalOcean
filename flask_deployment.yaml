@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flask_app_k8s
+  name: flask-app-k8s
   namespace: development
   labels:
-    app: flask_app_k8s
+    app: flask-app-k8s
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: flask_app_k8s
+      app: flask-app-k8s
   template:
     metadata:
       labels:
-        app: flask_app_k8s
+        app: flask-app-k8s
     spec:
       containers:
-        - name: flask_app_k8s
+        - name: flask-app-k8s
           image: <IMAGE>
           ports:
             - containerPort: 8000
