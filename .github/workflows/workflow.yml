@@ -40,9 +40,24 @@ jobs:
       - name: Save DigitalOcean kubeconfig with short-lived credentials
         run:
           doctl kubernetes cluster kubeconfig save --expiry-seconds 600 b44ab5f5-143a-4486-af43-9edcaa1ef0bc
-          # Deploy Docker image to the DigitalOcean kubernetes cluster
-      - name: Deploy
+
+        # Deploy to DigitalOCcean Kubernetes.
+      - name: Update deployment file
+        run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}|' $GITHUB_WORKSPACE/flask_deployment.yaml
+          
+      - name: Deploy to DigitalOcean Kubernetes
         run: |-
-          kubectl set image deployment/${{env.DEPLOYMENT_NAME}} ${{env.CONTAINER_NAME}}=${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-          kubectl -n development rollout status deployment/${{env.DEPLOYMENT_NAME}}
-          kubectl -n development get services -o wide
+          kubectl apply -f $GITHUB_WORKSPACE/flask_deployment.yaml
+          kubectl apply -f $GITHUB_WORKSPACE/flask_service.yaml
+
+      - name: Verify deployment
+        run: |-
+          kubectl rollout status deployment/flask_app_k8s
+          kubectl -n development get pods
+          kubectl get services -o wide
+        # Deploy Docker image to the DigitalOcean kubernetes cluster
+      # - name: Deploy
+        # run: |-
+          # kubectl -n developemnt set image deployment/${{env.DEPLOYMENT_NAME}} ${{env.CONTAINER_NAME}}=${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          # kubectl -n development rollout status deployment/${{env.DEPLOYMENT_NAME}}
+          # kubectl -n development get services -o wide

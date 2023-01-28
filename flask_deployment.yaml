@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: flask_app_k8s
-          image: tatendaz/flask_app_k8s:latest
+          image: <IMAGE>
           ports:
             - containerPort: 8000
               name: http
