@@ -48,7 +48,7 @@ jobs:
       - name: Deploy to DigitalOcean Kubernetes
         run: |-
           kubectl apply -f $GITHUB_WORKSPACE/flask_deployment.yaml
-          kubectl apply -f $GITHUB_WORKSPACE/flask_service.yaml
+          #kubectl apply -f $GITHUB_WORKSPACE/flask_service.yaml
 
       - name: Verify deployment
         run: |-
